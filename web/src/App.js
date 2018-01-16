@@ -15,7 +15,7 @@ class App extends Component {
   handler() {
     var loginPage = []
     var appPage = []
-    appPage.push(<LoginView key='Login' username='troll' parentContext={this}/>);
+    appPage.push(<LoginView key='Login' email='troll' parentContext={this}/>);
     this.setState({
       loginPage: loginPage,
       appPage: appPage

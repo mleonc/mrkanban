@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-import { Login, login } from '../Actions/Login';
 import { connect } from 'react-redux';
-import Form from '../Components/form'
+import { login } from '../Redux/LoginReducer';
+import { Login } from '../Actions/Login'
 
-class LoginView extends Component {
+class LoginForm extends Component {
+
   constructor(props) {
     super(props);
-
     this.state = {
-      username: '',
-      password: '',
-      submitted: false,
-      enabled: true,
-      error: ''
+      email:'',
+      password:'',
+      disabled:false,
+      focus:true,
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
@@ -24,39 +23,35 @@ class LoginView extends Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit(e, form) {
+  handleSubmit(e) {
     e.preventDefault();
+    let { email, password } = this.state;
+    this.props.login(email, password);
     this.setState({
-      form:form,
+      password: '',
+      disabled:true,
     });
-    let { username, password } = this.state;
-
-    if (username && password) {
-      return this.props.login(username, password);
-    }
   }
 
   waiting() {
-    alert('1');
+    console.log('waiting');
   }
 
   success() {
+    console.log('success');
     this.props.parentContext.handler();
   }
 
   error(error) {
-    let { form } = this.state;
-    let { enabled } = form.state;
-    if (!enabled) {
-      form.setState({
-        enabled:true,
-        password: '',
-      })
+    console.log('error');
+    let { disabled } = this.state;
+    if ( disabled ) {
       this.setState({
         password: '',
-        error:error.message
+        disabled:false,
       });
     }
+    this.password.focus(); 
   }
 
   componentDidUpdate() {
@@ -74,24 +69,34 @@ class LoginView extends Component {
   }
 
   render() {
-    let { username, password, submitted, enabled, error } = this.state;
+    let { email, password, disabled } = this.state;
     return (
-      <div className="col-md-6 col-md-offset-3">
-        <h2>Login</h2>
-        <Form inputs={[
-          {type:'text',name:'username',value:''},
-          {type:'password',name:'password',value:''},
-          {type:'submit', name:'login', value:'Login'}
-        ]} handlerChange={this.handleChange} handlerSubmit={this.handleSubmit} autoEnable='true'/>
-      </div>
-    );
+      <form name="loginForm" onSubmit={this.handleSubmit}>
+        <div className="form-group-collection">
+          <div className="form-group">
+            <label>Email:</label>
+            <input autoFocus type="text" id="email" name="email" onChange={this.handleChange} value={email}/>
+          </div>
+
+          <div className="form-group">
+            <label>Password:</label>
+            <input ref={(password) => { this.password = password; }} type="password" name="password" onChange={this.handleChange} value={password}/>
+          </div>
+        </div>
+
+        <input type="submit" value="Login" disabled={disabled}/>
+
+        <div className="message">
+        </div>
+      </form>
+    )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    state: state
-  }
+    state:state
+  };
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -100,4 +105,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginView);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

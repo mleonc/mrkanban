@@ -7,9 +7,10 @@ export const Login = {
 export default function loginAction(email, password, callback) {
   setTimeout(() => {
     if (email === 'admin@example.com' && password === 'admin') {
-      return callback(null);
+      let token = 'abcdef'
+      return callback(token);
     } else {
-      return callback(new Error('Invalid email and password'));
+      return callback(false, new Error('Invalid email and password'));
     }
   }, 1000);
 }

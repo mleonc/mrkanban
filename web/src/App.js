@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
-import LoginView from './Containers/LoginView'
+import Login from './Containers/LoginView'
+import Dashboard from './Containers/DashboardView'
+import { connect } from 'react-redux';
 
 class App extends Component {
   constructor(props){
     super(props);
-    this.handler = this.handler.bind(this);
-
+    
     this.state={
       loginPage:[],
       appPage:[]
     }
   }
 
-  handler() {
+  goApp() {
+    console.log('logged');
     var loginPage = []
     var appPage = []
-    appPage.push(<LoginView key='Login' email='troll' parentContext={this}/>);
+    appPage.push(<Dashboard key='Dashboard'/>);
     this.setState({
       loginPage: loginPage,
       appPage: appPage
@@ -24,10 +26,16 @@ class App extends Component {
 
   componentWillMount(){
     var loginPage =[];
-    loginPage.push(<LoginView key='Login' parentContext={this}/>);
+    loginPage.push(<Login key='Login' />);
     this.setState({
       loginPage:loginPage
     })
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.state.token !== false) {
+      this.goApp();
+    }
   }
 
   render() {
@@ -39,5 +47,13 @@ class App extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    state:state
+  };
+}
+
+App = connect(mapStateToProps)(App);
 
 export default App;

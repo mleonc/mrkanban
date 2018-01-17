@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { login } from '../Redux/LoginReducer';
-import { Login } from '../Actions/Login'
+import { Login as LoginActions }  from '../Actions/Login'
 
-class LoginForm extends Component {
+class Login extends Component {
 
   constructor(props) {
     super(props);
@@ -39,7 +39,6 @@ class LoginForm extends Component {
 
   success() {
     console.log('success');
-    this.props.parentContext.handler();
   }
 
   error(error) {
@@ -56,12 +55,12 @@ class LoginForm extends Component {
 
   componentDidUpdate() {
     let { state } = this.props;
-    switch (state.status) {
-      case Login._PENDING:
+    switch (state.type) {
+      case LoginActions._PENDING:
         return this.waiting();
-      case Login._SUCCESS:
+      case LoginActions._SUCCESS:
         return this.success();
-      case Login._ERROR:
+      case LoginActions._ERROR:
         return this.error(state.error);
       default:
         return;
@@ -105,4 +104,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

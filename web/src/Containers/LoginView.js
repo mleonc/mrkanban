@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { login } from '../Redux/LoginReducer';
 import { Login as LoginActions }  from '../Actions/Login'
+import '../Assets/css/style.css';
 
 class Login extends Component {
 
@@ -70,24 +71,28 @@ class Login extends Component {
   render() {
     let { email, password, disabled } = this.state;
     return (
-      <form name="loginForm" onSubmit={this.handleSubmit}>
-        <div className="form-group-collection">
-          <div className="form-group">
-            <label>Email:</label>
-            <input autoFocus type="text" id="email" name="email" onChange={this.handleChange} value={email}/>
-          </div>
+      <div className="background">
+        <div className="login-box">
+          <img className="logo" src="http://localhost.mrkanban/assets/images/mrkanban.png" alt="mrKanban" />
+          <form name="loginForm" onSubmit={this.handleSubmit}>
+            <div className="form-group-collection">
+              <div className="form-group">
+                <input autoFocus type="text" id="email" name="email" onChange={this.handleChange} value={email} required />
+                <label htmlFor="email">Correo electronico</label>
+              </div>
+              <div className="form-group">
+                <input ref={(password) => { this.password = password; }} type="password" name="password" onChange={this.handleChange} value={password} required />
+                <label htmlFor="password">Contraseña</label>
+              </div>
+            </div>
 
-          <div className="form-group">
-            <label>Password:</label>
-            <input ref={(password) => { this.password = password; }} type="password" name="password" onChange={this.handleChange} value={password}/>
-          </div>
+            <input type="submit" value="Login" disabled={disabled}/>
+
+            <div className="message">
+            </div>
+          </form>
         </div>
-
-        <input type="submit" value="Login" disabled={disabled}/>
-
-        <div className="message">
-        </div>
-      </form>
+      </div>
     )
   }
 }

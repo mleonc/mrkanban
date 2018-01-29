@@ -1,0 +1,13 @@
+.box {
+	position: fixed;
+	width: 150px;
+	height: 150px;
+	z-index: -1;
+	top:0px;
+}
+
+@keyframes movement {
+  0% { top: -150px; }
+  50% { top: 425px; }
+  100% { top: -150px; }
+}

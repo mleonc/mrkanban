@@ -10,7 +10,7 @@ export default function loginAction(email, password, callback) {
       let token = 'abcdef'
       return callback(token);
     } else {
-      return callback(false, new Error('Invalid email and password'));
+      return callback(false, new Error('El usuario o contraseña no son válidos'));
     }
   }, 1000);
 }

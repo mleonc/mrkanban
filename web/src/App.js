@@ -1,49 +1,31 @@
 import React, { Component } from 'react';
-import Login from './Containers/LoginView'
-import Dashboard from './Containers/DashboardView'
 import { connect } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Routes } from './Routes/routes'
 
 class App extends Component {
   constructor(props){
     super(props);
-    
+   
     this.state={
-      loginPage:[],
-      appPage:[]
+      auth:localStorage.getItem('auth'),
     }
-  }
-
-  goApp() {
-    console.log('logged');
-    var loginPage = []
-    var appPage = []
-    appPage.push(<Dashboard key='Dashboard'/>);
-    this.setState({
-      loginPage: loginPage,
-      appPage: appPage
-    })
-  }
-
-  componentWillMount(){
-    var loginPage =[];
-    loginPage.push(<Login key='Login' />);
-    this.setState({
-      loginPage:loginPage
-    })
   }
 
   componentWillReceiveProps(props) {
     if (props.state.token !== false) {
-      this.goApp();
+      this.setState({
+        auth:props.state.token,
+      });
     }
   }
 
   render() {
+    const { history } = this.props;
     return (
-      <div className="App">
-        {this.state.loginPage}
-        {this.state.appPage}
-      </div>     
+      <Router history={ history }>
+        { Routes }
+      </Router>
     );
   }
 }

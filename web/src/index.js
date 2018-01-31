@@ -7,7 +7,7 @@ import reducer from './Redux/store';
 
 ReactDOM.render(
 	<Provider store={reducer}>
-    <App />
+    	<App />
   </Provider>, 
   document.getElementById('root')
 );

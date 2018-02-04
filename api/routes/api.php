@@ -13,4 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('login2', ['as' => 'login2', 'uses' => 'LoginController@login2']);
 Route::post('login', 'LoginController@login');
+
+

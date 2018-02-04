@@ -4,7 +4,6 @@ import { login } from '../Redux/LoginReducer';
 import { Login as LoginActions }  from '../Actions/Login'
 import '../Assets/css/style.css';
 import Box  from '../Components/Box'
-import { Redirect } from 'react-router'
 
 class Login extends Component {
 
@@ -78,13 +77,10 @@ class Login extends Component {
 
   render() {
     let { email, password, disabled, errorText } = this.state;
-    let position = window.innerWidth / 4;
-    if (localStorage.getItem('auth') !== null) {
-      if (window.location.pathname !== '/dashboard') {
-        return <Redirect to="/dashboard" from="/" />;
-      }
-      return null;
+    if (email !== '' && password !== '') {
+      disabled = false;
     }
+    let position = window.innerWidth / 4;
     return (
       <div className="background">
         <Box left={position*0+110} wait='5'  color='#9B2335' ang='45' />

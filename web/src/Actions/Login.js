@@ -5,13 +5,27 @@ export const Login = {
 };
 
 export default function loginAction(email, password, callback) {
-  setTimeout(() => {
-    if (email === 'admin@example.com' && password === 'admin') {
-      let token = 'abcdef'
-      localStorage.setItem('auth', token);
-      return callback(token);
-    } else {
-      return callback(false, new Error('El usuario o contraseña no son válidos'));
+  fetch('http://localhost.mrkanban/mrk/api/login',
+  {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: email,
+      password: password,
+    })
+  }).then(response => {
+    return response.json();
+  }).then(json => {
+    let { user_id, access_token, expires_in, error } = json;
+    if (typeof error !== "undefined") {
+      return callback(false, new Error(json['error']));
     }
-  }, 1000);
+    localStorage.setItem('access_token', access_token);
+    localStorage.setItem('user_id', user_id);
+    localStorage.setItem('expires_in', expires_in);
+    return callback(access_token);
+  });
 }

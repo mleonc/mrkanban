@@ -22,8 +22,6 @@ class LoginController extends Controller
 
     protected function login(Request $request)
     {
-        file_put_contents("/var/tmp/login", $request->username."\n", FILE_APPEND);
-
     	$rules = [
     		'username'	=> 'required',
     		'password'	=> 'required|alphaNum|min:3',
@@ -58,9 +56,5 @@ class LoginController extends Controller
 
         $result['user_id'] = $account->getUserId();
         return $result;
-    }
-
-    protected function login2(Request $request) {
-        print_r('aquiiii');
     }
 }

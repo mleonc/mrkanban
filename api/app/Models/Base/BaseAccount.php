@@ -29,4 +29,43 @@ class BaseAccount extends Model
     {
         return $this->user_id;
     }
+
+    public function getRoleId() 
+    {
+        return $this->role_id;
+    }
+
+    public function getUsername() 
+    {
+        return $this->username;
+    }
+
+    public function getPassword() 
+    {
+        return $this->password;
+    }
+
+    public function setUserId($value)
+    {
+        $this->user_id = $value;
+        return $this;
+    }
+
+    public function setRoleId($value)
+    {
+        $this->role_id = $value;
+        return $this;
+    }
+
+    public function setUsername($value)
+    {
+        $this->username = $value;
+        return $this;
+    }
+
+    public function setPassword($value)
+    {
+        $this->password = $value;
+        return $this;
+    }
 }
